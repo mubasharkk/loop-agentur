@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +27,36 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, \Exception|Throwable $exception)
+    {
+        if ($request->is('api/*')) {
+            return $this->handleApiException($request, $exception);
+        }
+
+        return parent::render($request, $exception);
+    }
+
+    /**
+     * Source: https://stackoverflow.com/questions/51065170/laravel-api-how-to-properly-handle-errors
+     */
+    private function handleApiException($request, \Exception|Throwable $exception)
+    {
+        $exception = $this->prepareException($exception);
+
+        if ($exception instanceof HttpResponseException) {
+            $exception = $exception->getResponse();
+        }
+
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            $exception = $this->unauthenticated($request, $exception);
+        }
+
+        if ($exception instanceof \Illuminate\Validation\ValidationException) {
+            $exception = $this->convertValidationExceptionToResponse($exception, $request);
+        }
+
+        return response(['message' => $exception->getMessage()], $exception->getStatusCode());
     }
 }

@@ -17,7 +17,7 @@ ___
 |  Create GET `products/{id}` endpoint | 00:15  |  00:05 |  |
 |  Create GET `customers` list endpoint | 00:15  |  00:05 |  |
 |  Create GET `customers/{id}` endpoint | 00:15  |  00:05 |  |
-|  JsonResponse exception handling | 00:10  |   |  |
+|  JsonResponse exception handling | 00:10  | 00:12  |  |
 |  Create CRUD `orders` controller + Implement orders domain service  | 01:30  |   |  |
 |  Implement payment endpoint | 00:45  |   |  |
 |  Integrate for payment service | 00:45  |   |  |
