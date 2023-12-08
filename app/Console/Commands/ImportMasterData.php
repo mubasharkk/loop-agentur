@@ -34,8 +34,12 @@ class ImportMasterData extends Command
      */
     public function handle()
     {
-        $this->importProducts();
-        $this->importCustomers();
+        try {
+            $this->importProducts();
+            $this->importCustomers();
+        } catch (\Exception $ex) {
+            $this->error($ex->getMessage());
+        }
     }
 
     private function getDataFromCsv(string $uri): Collection
