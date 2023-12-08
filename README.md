@@ -13,13 +13,14 @@ ___
 |  Create `products` table migration + model| 00:20  |   00:14 |  |
 |  Create `orders` table migration + model | 00:20  |   00:12 |  |
 |  Create `masterdata` import command + activity Logging | 02:00  | 01:49  |  |
-|  Create CRUD `orders` controller + Implement orders domain service  | 01:30  |   |  |
-|  Implement for payment   | 00:45  |   |  |
-|  Create GET `products` list endpoint | 00:15  |   |  |
-|  Create GET `products/{id}` endpoint | 00:15  |   |  |
-|  Create GET `customers/{id}` endpoint | 00:15  |   |  |
+|  Create GET `products` list endpoint | 00:15  | 00:10  |  |
+|  Create GET `products/{id}` endpoint | 00:15  |  00:05 |  |
+|  Create GET `customers` list endpoint | 00:15  |  00:05 |  |
+|  Create GET `customers/{id}` endpoint | 00:15  |  00:05 |  |
 |  JsonResponse exception handling | 00:10  |   |  |
+|  Create CRUD `orders` controller + Implement orders domain service  | 01:30  |   |  |
 |  Implement payment endpoint | 00:45  |   |  |
+|  Integrate for payment service | 00:45  |   |  |
 ___
 
 ## Setup & Starting Laravel Sail
