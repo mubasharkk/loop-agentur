@@ -13,4 +13,14 @@ class Order extends Model
         'customer_id',
         'payed'
     ];
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+    public function products()
+    {
+        return $this->hasManyThrough(Product::class, OrderProducts::class);
+    }
 }
