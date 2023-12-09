@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CustomersController;
+use App\Http\Controllers\Api\OrdersController;
 use App\Http\Controllers\Api\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,5 @@ Route::apiResource('/products', ProductsController::class)
 
 Route::apiResource('/customers', CustomersController::class)
     ->only(['index', 'show']);
+
+Route::apiResource('/orders', OrdersController::class);

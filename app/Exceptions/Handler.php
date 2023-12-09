@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -54,7 +55,8 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof \Illuminate\Validation\ValidationException) {
-            $exception = $this->convertValidationExceptionToResponse($exception, $request);
+            /** ValidationException $exception */
+            return response(['message' => $exception->errors()], Response::HTTP_BAD_REQUEST);
         }
 
         return response(['message' => $exception->getMessage()], $exception->getStatusCode());
