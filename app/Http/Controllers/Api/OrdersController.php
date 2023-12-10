@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Models\Customer;
-use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
@@ -28,11 +27,11 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         $data = $request->validate([
-            'customer_id' => 'required|int|exists:customers,id'
+            'customer_id' => 'required|int|exists:customers,id',
         ]);
 
         return OrderResource::collection(
-            Customer::find($data['customer_id'])->orders
+            Customer::findOrFail($data['customer_id'])->orders
         );
     }
 
@@ -41,7 +40,17 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'customer_id' => 'required|int|exists:customers,id',
+            'product_id'  => 'required|int|exists:products,id',
+        ]);
+
+        $order = $this->orderService->createOrder(
+            $data['customer_id'],
+            [$data['product_id']]
+        );
+
+        return new OrderResource($order);
     }
 
     /**
@@ -50,7 +59,7 @@ class OrdersController extends Controller
     public function show(int $id)
     {
         return new OrderResource(
-          $this->orderService->getById($id)
+            $this->orderService->getById($id)
         );
     }
 

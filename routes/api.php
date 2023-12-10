@@ -28,4 +28,7 @@ Route::apiResource('/products', ProductsController::class)
 Route::apiResource('/customers', CustomersController::class)
     ->only(['index', 'show']);
 
-Route::apiResource('/orders', OrdersController::class);
+Route::apiResource('/orders', OrdersController::class)
+    ->except(['update']);
+
+Route::put('/orders/{id}/add', [OrdersController::class, 'update']);

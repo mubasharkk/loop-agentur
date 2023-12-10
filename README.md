@@ -21,6 +21,7 @@ ___
 |  Create CRUD `orders` controller + Implement orders domain service  | 01:30  |   |  |
 |  Implement payment endpoint | 00:45  |   |  |
 |  Integrate for payment service | 00:45  |   |  |
+|  Adding test cases for all endpoints | 01:45  |   |  |
 ___
 
 ## Setup & Starting Laravel Sail
