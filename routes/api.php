@@ -33,3 +33,5 @@ Route::apiResource('/orders', OrdersController::class)
 
 Route::put('/orders/{id}/add', [OrdersController::class, 'update']);
 Route::delete('/orders/{id}/remove', [OrdersController::class, 'update']);
+
+Route::post('/orders/{id}/pay', [OrdersController::class, 'payOrder']);

@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\OrderProducts;
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Response;
+use Mockery\Exception;
 
 class OrderService
 {
@@ -72,5 +74,25 @@ class OrderService
         return OrderProducts::where(
             ['order_id' => $order->id, 'product_id' => $productIds]
         )->delete();
+    }
+
+    public function pay(int $orderId)
+    {
+        $paymentService = new PaymentService();
+        $order = $this->getById($orderId);
+
+        try {
+            $paymentService->pay(
+                $order->id,
+                $order->customer->email_address,
+                $order->totalValue()
+            );
+        } catch (BadResponseException $ex) {
+            $response = $ex->getResponse();
+            throw new Exception(
+                \json_decode($response->getBody()->getContents())?->message,
+                $response->getStatusCode()
+            );
+        }
     }
 }

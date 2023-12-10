@@ -7,6 +7,7 @@ use App\Http\Resources\OrderResource;
 use App\Models\Customer;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrdersController extends Controller
 {
@@ -74,11 +75,24 @@ class OrdersController extends Controller
 
         $order = $this->orderService->getById($id);
 
+        if ($order->payed) {
+            throw new \Exception(
+                'Payed order can not be udpated',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
         /** @Note: This is just a workaround to reduce the time spent on this task */
         if ($request->isMethod('PUT')) {
-            $this->orderService->addProductsToOder($order->id, [$data['product_id']]);
-        }elseif($request->isMethod('DELETE')) {
-            $this->orderService->removeProductsFromOrder($order->id, [$data['product_id']]);
+            $this->orderService->addProductsToOder(
+                $order->id,
+                [$data['product_id']]
+            );
+        } elseif ($request->isMethod('DELETE')) {
+            $this->orderService->removeProductsFromOrder(
+                $order->id,
+                [$data['product_id']]
+            );
         }
 
         return new OrderResource($order);
@@ -92,5 +106,12 @@ class OrdersController extends Controller
         return response(
             $this->orderService->getById($id)->delete()
         );
+    }
+
+    public function payOrder(int $orderId)
+    {
+        $this->orderService->pay($orderId);
+
+        return response(['message' => 'Payment Successful']);
     }
 }
