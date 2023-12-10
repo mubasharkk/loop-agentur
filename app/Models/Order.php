@@ -17,6 +17,10 @@ class Order extends Model
         'payed'
     ];
 
+    protected $casts = [
+        'payed' => 'bool'
+    ];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);

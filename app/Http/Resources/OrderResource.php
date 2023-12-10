@@ -17,9 +17,10 @@ class OrderResource extends JsonResource
     {
         return [
             'id'       => $this->id,
+            'payed'    => $this->payed,
+            'value'    => $this->totalValue(),
             'customer' => new CustomerResource($this->customer),
             'products' => ProductResource::collection($this->products),
-            'value'    => $this->totalValue(),
         ];
     }
 }

@@ -81,12 +81,17 @@ class OrderService
         $paymentService = new PaymentService();
         $order = $this->getById($orderId);
 
+        if ($order->payed){
+            throw new \Exception('Order is already payed!', Response::HTTP_BAD_REQUEST);
+        }
+
         try {
             $paymentService->pay(
                 $order->id,
                 $order->customer->email_address,
                 $order->totalValue()
             );
+            $order->update(['payed' => true]);
         } catch (BadResponseException $ex) {
             $response = $ex->getResponse();
             throw new Exception(
