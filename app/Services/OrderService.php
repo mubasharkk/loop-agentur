@@ -12,6 +12,16 @@ class OrderService
 {
 
     /**
+     * @var \App\Services\PaymentService
+     */
+    private PaymentService $paymentService;
+
+    public function __construct(PaymentService $paymentService)
+    {
+        $this->paymentService = $paymentService;
+    }
+
+    /**
      * @param  int  $id
      * @throw \Illuminate\Database\Eloquent\ModelNotFoundException
      *
@@ -76,9 +86,8 @@ class OrderService
         )->delete();
     }
 
-    public function pay(int $orderId)
+    public function pay(int $orderId): array
     {
-        $paymentService = new PaymentService();
         $order = $this->getById($orderId);
 
         if ($order->payed){
@@ -86,12 +95,16 @@ class OrderService
         }
 
         try {
-            $paymentService->pay(
+            $response = $this->paymentService->pay(
                 $order->id,
                 $order->customer->email_address,
                 $order->totalValue()
             );
-            $order->update(['payed' => true]);
+            $response = \json_decode($response, true);
+            if ($response['message'] == 'Payment Successful') {
+                $order->update(['payed' => true]);
+            }
+            return $response;
         } catch (BadResponseException $ex) {
             $response = $ex->getResponse();
             throw new Exception(

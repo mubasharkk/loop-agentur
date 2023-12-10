@@ -7,6 +7,8 @@
 * I have kept the logic accurately to the task description except where I feel changes are necessary for improvement of the solution.
 * I have skipped the security and authentication of the API because of time.
   * A `jwt` token or `passport` oauth MW could be used.
+* I have added test cases for some not all to not spend too much time on it. 
+  * The other way to do this task is to implement TDD but tests are written at the end to showcase my expertise briefly.
 
 ## Files to assess:
 
@@ -33,7 +35,7 @@ ___
 |  Create CRUD `orders` controller + Implement orders domain service  | 01:30  | 02:14  |  |
 |  Implement payment endpoint | 00:45  |  00:50 |  |
 |  Integrate for payment service | 00:45  | 00:18  |  |
-|  Adding test cases for all endpoints | 01:45  |   |  |
+|  Adding test cases for some endpoints | 01:45  | 02:23  |  |
 ___
 
 ## Setup & Starting Laravel Sail

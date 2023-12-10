@@ -13,7 +13,7 @@ class ImportMasterdataCommandTest extends TestCase
     /**
      * A basic unit test example.
      */
-    public function test_metadata_artisan_cmd(): void
+    public function test_import_masterdata_artisan_cmd(): void
     {
         $this->artisan('import:master-data')->assertSuccessful();
         $this->assertDatabaseCount('customers', 10000);

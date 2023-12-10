@@ -110,8 +110,6 @@ class OrdersController extends Controller
 
     public function payOrder(int $orderId)
     {
-        $this->orderService->pay($orderId);
-
-        return response(['message' => 'Payment Successful']);
+       return response($this->orderService->pay($orderId));
     }
 }
