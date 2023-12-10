@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Order;
 use App\Models\OrderProducts;
+use Illuminate\Http\Response;
 
 class OrderService
 {
@@ -34,15 +35,42 @@ class OrderService
 
         $order->save();
 
-        $items = array_map(function ($productId) use ($order) {
+        $this->addProductsToOder($order->id, $productIds);
+
+        return $order;
+    }
+
+    public function addProductsToOder(int $orderId, array $productIds)
+    {
+        $items = array_map(function ($productId) use ($orderId) {
             return [
-                'order_id'   => $order->id,
+                'order_id'   => $orderId,
                 'product_id' => $productId,
             ];
         }, $productIds);
 
-        OrderProducts::insert($items);
+        return OrderProducts::insert($items);
+    }
 
-        return $order;
+    /**
+     * @param  int    $id
+     * @param  int[]  $productsId
+     *
+     * @throws \Exception
+     */
+    public function removeProductsFromOrder(int $id, array $productIds)
+    {
+        $order = $this->getById($id);
+        /** @Note: can also check here if the given products id is in the list or not */
+        if ($order->products->count() <= 1) {
+            throw new \Exception(
+                "Order can not be empty! Unable to remove the only product.",
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        return OrderProducts::where(
+            ['order_id' => $order->id, 'product_id' => $productIds]
+        )->delete();
     }
 }

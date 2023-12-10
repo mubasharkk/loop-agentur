@@ -59,6 +59,6 @@ class Handler extends ExceptionHandler
             return response(['message' => $exception->errors()], Response::HTTP_BAD_REQUEST);
         }
 
-        return response(['message' => $exception->getMessage()], $exception->getStatusCode());
+        return response(['message' => $exception->getMessage()], $exception->getCode());
     }
 }

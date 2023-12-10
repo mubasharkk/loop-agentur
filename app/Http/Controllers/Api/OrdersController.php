@@ -22,7 +22,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the orders of the specified customer.
      */
     public function index(Request $request)
     {
@@ -36,7 +36,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created order.
      */
     public function store(Request $request)
     {
@@ -54,7 +54,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified order.
      */
     public function show(int $id)
     {
@@ -64,15 +64,28 @@ class OrdersController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified products in an order.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $data = $request->validate([
+            'product_id' => 'required|int|exists:products,id',
+        ]);
+
+        $order = $this->orderService->getById($id);
+
+        /** @Note: This is just a workaround to reduce the time spent on this task */
+        if ($request->isMethod('PUT')) {
+            $this->orderService->addProductsToOder($order->id, [$data['product_id']]);
+        }elseif($request->isMethod('DELETE')) {
+            $this->orderService->removeProductsFromOrder($order->id, [$data['product_id']]);
+        }
+
+        return new OrderResource($order);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified order.
      */
     public function destroy(string $id)
     {

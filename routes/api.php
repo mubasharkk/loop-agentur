@@ -32,3 +32,4 @@ Route::apiResource('/orders', OrdersController::class)
     ->except(['update']);
 
 Route::put('/orders/{id}/add', [OrdersController::class, 'update']);
+Route::delete('/orders/{id}/remove', [OrdersController::class, 'update']);

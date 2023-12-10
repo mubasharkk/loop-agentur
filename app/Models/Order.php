@@ -36,6 +36,6 @@ class Order extends Model
 
     public function totalValue(): float
     {
-        return $this->products->sum('price');
+        return round($this->products->sum('price'), 2);
     }
 }
