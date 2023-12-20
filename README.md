@@ -12,7 +12,7 @@
 
 ## Files to assess:
 
-* [app/Exceptions/Handler.php](https://github.com/mubasharkk/loop-agentur/blob/main/app/Exceptions/Handler.phphttps://github.com/mubasharkk/loop-agentur/blob/main/app/Exceptions/Handler.php)
+* [app/Exceptions/Handler.php](https://github.com/mubasharkk/loop-agentur/blob/main/app/Exceptions/Handler.php)
 * [app/Http/Controllers/Api/OrdersController.php](https://github.com/mubasharkk/loop-agentur/blob/main/app/Http/Controllers/Api/OrdersController.php)
 * [app/Services/](https://github.com/mubasharkk/loop-agentur/tree/main/app/Services)
 * [app/Models](https://github.com/mubasharkk/loop-agentur/tree/main/app/Models)
